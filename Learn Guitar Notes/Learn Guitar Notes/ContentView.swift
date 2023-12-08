@@ -9,44 +9,48 @@ import SwiftUI
 
 struct ContentView: View {
     let notes = ["A", "B", "C", "D", "E", "F", "G"]
+    let openNotes = ["E", "B", "G", "D", "A" , "E"]
+    
     var body: some View {
+        // MARK: Container
         VStack(spacing: 0) {
-            HStack(spacing: 0) {
-                // MARK: String notes
-                // MARK: Fretboard
-                VStack(alignment: .leading) {
-                    Text("E")
-                    Text("B")
-                    Text("G")
-                    Text("D")
-                    Text("A")
-                    Text("E")
-                }
-                .background(
-                    Rectangle()
-                        .foregroundColor(.red)
-                        .frame(width: 50, height: 210)
-                        .border(.black)
-                        .position(x: 10, y: 61.5)
-                )
-                .padding()
-                
-                VStack {
-                    ForEach(0..<6) { _ in
-                        Spacer()
-                        Rectangle()
-                            .foregroundColor(.secondary)
-                            .frame(height: 5)
+            
+            // GeoReader to fill up the notes and fretboard fractionally within the same container
+            GeometryReader { geometry in
+                HStack(spacing: 0) {
+                    // MARK: Fretboard Notes
+                    VStack(alignment: .leading) {
+                        ForEach(0..<6) { note in
+                            Text(openNotes[note])
+                                .font(.title3)
+                                .padding(0.4)
+                        }
                     }
-                    Spacer()
+                    .frame(width: geometry.size.width * 0.08, height: geometry.size.height)
+                    .background(.red)
+                    
+                    // MARK: Strings
+                    VStack {
+                        Spacer()
+                        ForEach(0..<6) { _ in
+                            Rectangle()
+                                .foregroundColor(.secondary)
+                                .frame(height: 5)
+                                .padding(.vertical, 9.7)
+                        }
+                        Spacer()
+                    }
+                    .background(Color.brown)
+                    .frame(width: geometry.size.width * 0.92, height: geometry.size.height)
+                    .border(.black)
                 }
-                .background(Color.brown)
-                .frame(width: .infinity, height: 210)
+                .clipped()
                 .border(.black)
             }
-            .border(.black)
+            .frame(height: 210)
             
             HStack {
+                
                 // MARK: Settings
                 // MARK: Readout
                 Rectangle()
@@ -54,6 +58,8 @@ struct ContentView: View {
                     .border(.black)
             }
             .frame(maxWidth: .infinity, maxHeight: 45)
+            
+            // MARK: Piano notes
             ZStack {
                 // In here is where you'll place the keyboard
                 // It's a ZStack so you can show the sharps and flats over the whole notes (Check Android app for reference)
