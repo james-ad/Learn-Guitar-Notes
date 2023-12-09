@@ -35,8 +35,8 @@ struct ContentView: View {
                         ForEach(0..<6) { _ in
                             Rectangle()
                                 .foregroundColor(.secondary)
-                                .frame(height: 5)
-                                .padding(.vertical, 9.7)
+                                .frame(height: 4)
+                                .padding(.vertical, 10)
                         }
                         Spacer()
                     }
@@ -52,12 +52,15 @@ struct ContentView: View {
             HStack {
                 
                 // MARK: Settings
+                Image(systemName: "gearshape")
+                    .padding(8)
+                    .border(.black, width: 3)
+                    .padding(.horizontal)
+                Spacer()
                 // MARK: Readout
-                Rectangle()
-                    .foregroundColor(.blue)
-                    .border(.black)
             }
             .frame(maxWidth: .infinity, maxHeight: 45)
+            .background(.blue)
             
             // MARK: Piano notes
             ZStack {
