@@ -29,22 +29,43 @@ struct ContentView: View {
                     .frame(width: geometry.size.width * 0.08, height: geometry.size.height)
                     .background(.red)
                     
-                    // MARK: Strings
-                    VStack {
-                        Spacer()
-                        ForEach(0..<6) { _ in
-                            Rectangle()
-                                .foregroundColor(.secondary)
-                                .frame(height: 4)
-                                .padding(.vertical, 10)
+                    let totalScaleLength = geometry.size.width * 0.92 // Adjust the scale length as needed
+                    let numberOfFrets = 12 // You can adjust this number based on how many frets you want to display
+                    
+                    ZStack(alignment: .leading) {
+                        // Draw frets
+                        HStack {
+                            ForEach(0..<numberOfFrets, id: \.self) { fret in
+                                // Calculate the position of the fret from the nut
+                                let distanceFromNut = totalScaleLength * (1.415 / pow(2.38, CGFloat(fret) / 12))
+                                let xPosition = totalScaleLength - distanceFromNut
+                                
+                                Rectangle()
+                                    .foregroundColor(.secondary) // Color of the fret
+                                    .frame(width: 2, height: geometry.size.height) // Width and height of the fret line
+                                    .offset(x: xPosition, y: 0) // Position the fret line
+                            }
                         }
-                        Spacer()
+                        .frame(width: geometry.size.width * 0.92)
+                        // MARK: Strings
+                        VStack {
+                            Spacer()
+                            ForEach(1..<7) { num in
+                                Rectangle()
+                                    .foregroundColor(Color(red: (192 + 140) / (2 * 255), green: (192 + 140) / (2 * 255), blue: (192 + 140) / (2 * 255)))
+                                    .frame(height: CGFloat(num - 1))
+                                    .padding(2)
+                                    .border(.black)
+                                    .padding(.vertical, 10)
+                            }
+                            Spacer()
+                        }
+                        .frame(width: geometry.size.width * 0.92, height: geometry.size.height)
+//                        .border(.black)
                     }
-                    .background(Color.brown)
-                    .frame(width: geometry.size.width * 0.92, height: geometry.size.height)
-                    .border(.black)
                 }
                 .clipped()
+                .background(Color.brown)
                 .border(.black)
             }
             .frame(height: 210)
