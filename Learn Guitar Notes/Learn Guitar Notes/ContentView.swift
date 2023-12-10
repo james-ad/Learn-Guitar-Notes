@@ -31,6 +31,7 @@ struct ContentView: View {
                     
                     let totalScaleLength = geometry.size.width * 0.92 // Adjust the scale length as needed
                     let numberOfFrets = 12 // You can adjust this number based on how many frets you want to display
+                    let dotSize: CGFloat = 23
                     
                     ZStack(alignment: .leading) {
                         // Draw frets
@@ -46,7 +47,43 @@ struct ContentView: View {
                                     .offset(x: xPosition, y: 0) // Position the fret line
                             }
                         }
-                        .frame(width: geometry.size.width * 0.92)
+                        .frame(width: totalScaleLength)
+                        
+                        // MARK: Inlays
+                        HStack {
+                            Circle()
+                                .frame(width: dotSize, height: dotSize)
+                                .foregroundColor(.white)
+                                .offset(x: totalScaleLength / 3.94, y: -4.25)
+                            
+                            Circle()
+                                .frame(width: dotSize, height: dotSize)
+                                .foregroundColor(.white)
+                                .offset(x: totalScaleLength / 2.532, y: -4.25)
+                            
+                            Circle()
+                                .frame(width: dotSize, height: dotSize)
+                                .foregroundColor(.white)
+                                .offset(x: totalScaleLength / 1.935, y: -4.25)
+                            
+                            Circle()
+                                .frame(width: dotSize, height: dotSize)
+                                .foregroundColor(.white)
+                                .offset(x: totalScaleLength / 1.616, y: -4.25)
+                            
+                            VStack {
+                                Circle()
+                                    .frame(width: dotSize, height: dotSize)
+                                    .foregroundColor(.white)
+                                    .offset(x: totalScaleLength - 152.3, y: -23)
+                                
+                                Circle()
+                                    .frame(width: dotSize, height: dotSize)
+                                    .foregroundColor(.white)
+                                    .offset(x: totalScaleLength - 152.3, y: 14.5)
+                            }
+                        }
+                        
                         // MARK: Strings
                         VStack {
                             Spacer()
@@ -61,7 +98,6 @@ struct ContentView: View {
                             Spacer()
                         }
                         .frame(width: geometry.size.width * 0.92, height: geometry.size.height)
-//                        .border(.black)
                     }
                 }
                 .clipped()
@@ -102,7 +138,7 @@ struct ContentView: View {
         }
         .padding()
     }
-}
+    }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
