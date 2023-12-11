@@ -92,7 +92,8 @@ struct ContentView: View {
                                     .foregroundColor(Color(red: (192 + 140) / (2 * 255), green: (192 + 140) / (2 * 255), blue: (192 + 140) / (2 * 255)))
                                     .frame(height: CGFloat(num - 1))
                                     .padding(2)
-                                    .border(.black)
+                                    .border(.black, width: 1)
+                                    .shadow(color: .black, radius: calculateShadow(withValue: num), y: -1 * calculateY(withValue: num))
                                     .padding(.vertical, 10)
                             }
                             Spacer()
@@ -138,7 +139,15 @@ struct ContentView: View {
         }
         .padding()
     }
+    
+    func calculateShadow(withValue value: Int) -> CGFloat {
+        return CGFloat(1.6) - (CGFloat(value) * CGFloat(0.1))
     }
+    
+    func calculateY(withValue value: Int) -> CGFloat {
+        return CGFloat(1.4) - (CGFloat(value) * CGFloat(0.1))
+    }
+}
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
