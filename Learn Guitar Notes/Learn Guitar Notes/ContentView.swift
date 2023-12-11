@@ -93,7 +93,7 @@ struct ContentView: View {
                                     .frame(height: CGFloat(num - 1))
                                     .padding(2)
                                     .border(.black, width: 1)
-                                    .shadow(color: .black, radius: calculateShadow(withValue: num), y: -1 * calculateY(withValue: num))
+                                    .shadow(color: .black, radius: calculateShadow(withValue: num), y: calculateY(withValue: num))
                                     .padding(.vertical, 10)
                             }
                             Spacer()
@@ -145,7 +145,7 @@ struct ContentView: View {
     }
     
     func calculateY(withValue value: Int) -> CGFloat {
-        return CGFloat(1.4) - (CGFloat(value) * CGFloat(0.1))
+        return CGFloat(1.6) - (CGFloat(value) * CGFloat(0.1))
     }
 }
 
