@@ -111,9 +111,23 @@ struct ContentView: View {
                 
                 // MARK: Settings
                 Image(systemName: "gearshape")
-                    .padding(8)
-                    .border(.black, width: 3)
-                    .padding(.horizontal)
+                    .resizable()
+                    .frame(width: 30, height: 30)
+                    .padding(4)
+                    .overlay {
+                        RoundedRectangle(cornerRadius: 5)
+                            .stroke(.black, lineWidth: 3)
+                    }
+                    .offset(x: 10)
+                Image(systemName: "music.quarternote.3")
+                    .resizable()
+                    .frame(width: 30, height: 30)
+                    .padding(4)
+                    .overlay {
+                        RoundedRectangle(cornerRadius: 5)
+                            .stroke(.black, lineWidth: 3)
+                    }
+                    .offset(x: 15)
                 Spacer()
                 // MARK: Readout
             }
