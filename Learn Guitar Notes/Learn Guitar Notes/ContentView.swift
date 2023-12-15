@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State var showNotesGrid: Bool = false
     let notes = ["A", "B", "C", "D", "E", "F", "G"]
     let openNotes = ["E", "B", "G", "D", "A" , "E"]
     
@@ -101,16 +102,34 @@ struct ContentView: View {
                         }
                         .frame(width: geometry.size.width * 0.92, height: geometry.size.height)
                         
-                        GridView(rows: 6, columns: 12)
-                            .frame(width: totalScaleLength)
+                        if showNotesGrid {
+                            Grid {
+                                ForEach(0..<6) { num in
+                                    GridRow {
+                                        ForEach((2..<14).reversed(), id: \.self) { column in
+                                            Circle()
+                                                .frame(width: geometry.size.width * 0.035)
+                                                .offset(x: 15)
+                                            Divider()
+                                        }
+                                    }
+                                    .padding(1)
+                                }
+                            }
+                            .clipped()
+                        }
+//                        GridView(rows: 6, columns: 12)
+//                            .frame(width: totalScaleLength, height: geometry.size.height)
+//                            .clipped()
                     }
                     
                 }
-                .clipped()
                 .background(Color.brown)
                 .border(.black)
+                .clipped()
             }
             .frame(height: 210)
+            .clipped()
             
             HStack {
                 
@@ -133,6 +152,7 @@ struct ContentView: View {
                             .stroke(.black, lineWidth: 3)
                     }
                     .offset(x: 15)
+                    .onTapGesture { showNotesGrid.toggle() }
                 Spacer()
                 // MARK: Readout
             }
@@ -179,24 +199,15 @@ struct GridView: View {
     let columns: Int
 
     var body: some View {
-        HStack(spacing: 4) {
-            ForEach((0..<columns).reversed(), id: \.self) { row in
-                VStack {
-                    ForEach((2..<rows + 1).reversed(), id: \.self) { column in
-                        GeometryReader { geo in
-                            Rectangle()
-                                Circle()
-                                .frame(width: geo.size.width / 1.5, height: geo.size.height / 1.5, alignment: .center)
-                                    .foregroundColor(.red)
-                                    .frame(width: CGFloat(geo.size.width + 5) * 4, height: 30)
-                            .background(.clear)
-                            .foregroundStyle(.clear)
-                            .padding(.horizontal, 4)
-                        }
+        VStack {
+            ForEach(1..<rows + 1, id: \.self) { row in
+                HStack {
+                    ForEach(1..<columns + 1, id: \.self) { column in
+                        Rectangle()
+                            .frame(width: 20, height: 20)
                     }
                 }
-                .background(.clear)
-                .foregroundStyle(.clear)
+                .padding(3)
             }
         }
     }
