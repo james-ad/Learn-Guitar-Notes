@@ -28,13 +28,14 @@ struct ContentView: View {
                     }
                     .frame(width: geometry.size.width * 0.08, height: geometry.size.height)
                     .background(.red)
+                    .clipped()
                     
                     let totalScaleLength = geometry.size.width * 0.92 // Adjust the scale length as needed
                     let numberOfFrets = 12 // You can adjust this number based on how many frets you want to display
                     let dotSize: CGFloat = 23
                     
                     ZStack(alignment: .leading) {
-                        // Draw frets
+                        // MARK: Frets
                         HStack {
                             ForEach(0..<numberOfFrets, id: \.self) { fret in
                                 // Calculate the position of the fret from the nut
@@ -99,7 +100,11 @@ struct ContentView: View {
                             Spacer()
                         }
                         .frame(width: geometry.size.width * 0.92, height: geometry.size.height)
+                        
+                        GridView(rows: 6, columns: 12)
+                            .frame(width: totalScaleLength)
                     }
+                    
                 }
                 .clipped()
                 .background(Color.brown)
@@ -166,5 +171,33 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+    }
+}
+
+struct GridView: View {
+    let rows: Int
+    let columns: Int
+
+    var body: some View {
+        HStack(spacing: 4) {
+            ForEach((0..<columns).reversed(), id: \.self) { row in
+                VStack {
+                    ForEach((2..<rows + 1).reversed(), id: \.self) { column in
+                        GeometryReader { geo in
+                            Rectangle()
+                                Circle()
+                                .frame(width: geo.size.width / 1.5, height: geo.size.height / 1.5, alignment: .center)
+                                    .foregroundColor(.red)
+                                    .frame(width: CGFloat(geo.size.width + 5) * 4, height: 30)
+                            .background(.clear)
+                            .foregroundStyle(.clear)
+                            .padding(.horizontal, 4)
+                        }
+                    }
+                }
+                .background(.clear)
+                .foregroundStyle(.clear)
+            }
+        }
     }
 }
