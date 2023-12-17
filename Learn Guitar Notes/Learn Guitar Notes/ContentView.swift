@@ -8,9 +8,28 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State var showNotesGrid: Bool = false
+    @State var showNotesGrid: Bool = true
     let notes = ["A", "B", "C", "D", "E", "F", "G"]
     let openNotes = ["E", "B", "G", "D", "A" , "E"]
+    let notesXOffsets: [Int: CGFloat] = [0: 25,
+                                            1: 40,
+                                            2: 55,
+                                            3: 63,
+                                            4: 67,
+                                            5: 70,
+                                            6: 70,
+                                            7: 65,
+                                        8: 57,
+                                            9: 45,
+                                            10: 35,
+                                            11: 20
+    ]
+    let notesYOffsets: [Int: CGFloat] = [0: -5,
+                                         1: -5,
+                                         2: -5,
+                                         3: -5,
+                                         4: -1,
+                                         5: 5,]
     
     var body: some View {
         // MARK: Container
@@ -105,15 +124,17 @@ struct ContentView: View {
                         if showNotesGrid {
                             Grid {
                                 ForEach(0..<6) { num in
+                                    let yOffset = notesYOffsets[num]!
                                     GridRow {
-                                        ForEach((2..<14).reversed(), id: \.self) { column in
+                                        ForEach((0..<numberOfFrets),  id: \.self) { column in
+                                            let xOffset = notesXOffsets[column]!
                                             Circle()
                                                 .frame(width: geometry.size.width * 0.035)
-                                                .offset(x: 15)
+                                                .offset(x: xOffset)
                                             Divider()
                                         }
                                     }
-                                    .padding(1)
+                                    .offset(y: yOffset)
                                 }
                             }
                             .clipped()
